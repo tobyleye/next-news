@@ -124,7 +124,7 @@ export default function Home() {
       <style jsx>{`
         .container {
           max-width: 600px;
-          margin: 50px auto 20px;
+          margin: 30px auto 20px;
           padding: 0 18px;
         }
         header {
