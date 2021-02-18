@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import ArticleCard from "../components/ArticleCard";
 import Tab from "../components/Tab";
 import AddNewCategory from "../components/AddNewCategory";
+import Loading from "../components/Loading";
 
 const CATEGORIES_STORAGEKEY = "categories";
 
@@ -104,7 +105,7 @@ export default function Home() {
         ) : (
           <section>
             {isLoading ? (
-              <center>Loading...</center>
+              <Loading />
             ) : (
               <div>
                 {articles.map((article, id) => (
