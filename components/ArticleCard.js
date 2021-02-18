@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 export default function ArticleCard({
   title,
   description,
@@ -15,7 +16,7 @@ export default function ArticleCard({
         style={{ objectFit: "cover" }}
       />
       <h3>{title}</h3>
-      <time>{publishedAt}</time>
+      <time>{dayjs(publishedAt).format("DD/MM/YYYY hh:mm a")}</time>
       <p>
         {description}{" "}
         <a target="_blank" href={url}>
