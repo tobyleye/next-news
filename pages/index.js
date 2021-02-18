@@ -23,7 +23,7 @@ export default function Home() {
       setIsLoading(true);
       const url =
         process.env.NODE_ENV === "production"
-          ? "/.netlify/getArticles"
+          ? "/.netlify/functions/getArticles"
           : "http://localhost:9000/getArticles";
       const data = await fetch(`${url}?q=${activeCategory}`).then((res) =>
         res.json()
