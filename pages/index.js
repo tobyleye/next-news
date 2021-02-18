@@ -1,65 +1,127 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import { useEffect, useState } from "react";
+import ArticleCard from "../components/ArticleCard";
+import Tab from "../components/Tab";
+import AddNewCategory from "../components/AddNewCategory";
+
+const CATEGORIES_STORAGEKEY = "categories";
+
+const views = {
+  add: "add",
+  list: "list",
+};
 
 export default function Home() {
+  const [articles, setArticles] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [activeCategory, setActiveCategory] = useState("business");
+  const [view, setView] = useState(views.list);
+
+  const fetchNews = async () => {
+    try {
+      setIsLoading(true);
+      const data = await fetch(
+        `https://newsapi.org/v2/everything?q=${activeCategory}&apiKey=${process.env.NEXT_PUBLIC_API_KEY}`
+      ).then((res) => res.json());
+      setArticles(data.articles);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchNews();
+  }, [activeCategory]);
+
+  useEffect(() => {
+    setCategories(loadCategories());
+  }, []);
+
+  // persist categories
+  useEffect(saveCategories, [categories]);
+
+  function loadCategories() {
+    if (CATEGORIES_STORAGEKEY in localStorage) {
+      return JSON.parse(localStorage[CATEGORIES_STORAGEKEY] || "[]");
+    } else {
+      // if no key exist
+      // idealy this block should run on the first visit
+      return [
+        "business",
+        "entertainment",
+        "general",
+        "health",
+        "science",
+        "sports",
+        "technology",
+      ];
+    }
+  }
+
+  function saveCategories() {
+    localStorage[CATEGORIES_STORAGEKEY] = JSON.stringify(categories);
+  }
+
   return (
-    <div className={styles.container}>
+    <div className="container">
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+      <section>
+        <header>
+          <h3>Next News</h3>
+          <button onClick={() => setView(views.add)}>Add category</button>
+        </header>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+        <Tab
+          tabs={categories}
+          active={activeCategory}
+          onChange={(tabName) => {
+            setView(views.list);
+            setActiveCategory(tabName);
+          }}
+        />
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+        {view === views.add ? (
+          <AddNewCategory
+            categories={categories}
+            onChange={(categories) => setCategories(categories)}
+          />
+        ) : (
+          <section>
+            {isLoading ? (
+              <center>Loading...</center>
+            ) : (
+              <div>
+                {articles.map((article, id) => (
+                  <>
+                    <ArticleCard key={id} {...article} />
+                    {id < articles.length - 1 && <hr />}
+                  </>
+                ))}
+              </div>
+            )}
+          </section>
+        )}
+      </section>
+      <style jsx>{`
+        .container {
+          max-width: 600px;
+          margin: 50px auto 20px;
+          padding: 0 18px;
+        }
+        header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+        }
+      `}</style>
     </div>
-  )
+  );
 }
