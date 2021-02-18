@@ -25,9 +25,9 @@ export default function AddNewCategory({ categories, onChange }) {
       </form>
 
       <ul>
-        {categories.map((cat) => (
-          <li>
-            {cat}{" "}
+        {categories.map((cat, id) => (
+          <li key={id}>
+            {cat}
             <button
               onClick={() =>
                 onChange(categories.filter((catItem) => catItem !== cat))

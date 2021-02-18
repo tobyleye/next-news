@@ -15,15 +15,19 @@ export default function Home() {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [categories, setCategories] = useState([]);
-  const [activeCategory, setActiveCategory] = useState("business");
+  const [activeCategory, setActiveCategory] = useState("");
   const [view, setView] = useState(views.list);
 
   const fetchNews = async () => {
     try {
       setIsLoading(true);
-      const data = await fetch(
-        `https://newsapi.org/v2/everything?q=${activeCategory}&apiKey=${process.env.NEXT_PUBLIC_API_KEY}`
-      ).then((res) => res.json());
+      const url =
+        process.env.NODE_ENV === "production"
+          ? "/.netlify/getArticles"
+          : "http://localhost:9000/getArticles";
+      const data = await fetch(`${url}?q=${activeCategory}`).then((res) =>
+        res.json()
+      );
       setArticles(data.articles);
     } catch (error) {
       console.log(error);
@@ -33,17 +37,22 @@ export default function Home() {
   };
 
   useEffect(() => {
-    fetchNews();
+    if (activeCategory) {
+      fetchNews();
+    }
   }, [activeCategory]);
 
   useEffect(() => {
-    setCategories(loadCategories());
+    loadCategories().then((categories) => {
+      setCategories(categories);
+      setActiveCategory(categories[0]);
+    });
   }, []);
 
   // persist categories
   useEffect(saveCategories, [categories]);
 
-  function loadCategories() {
+  async function loadCategories() {
     if (CATEGORIES_STORAGEKEY in localStorage) {
       return JSON.parse(localStorage[CATEGORIES_STORAGEKEY] || "[]");
     } else {
@@ -68,7 +77,7 @@ export default function Home() {
   return (
     <div className="container">
       <Head>
-        <title>Create Next App</title>
+        <title>Next News</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -80,7 +89,7 @@ export default function Home() {
 
         <Tab
           tabs={categories}
-          active={activeCategory}
+          active={view === views.list && activeCategory}
           onChange={(tabName) => {
             setView(views.list);
             setActiveCategory(tabName);
@@ -101,7 +110,9 @@ export default function Home() {
                 {articles.map((article, id) => (
                   <>
                     <ArticleCard key={id} {...article} />
-                    {id < articles.length - 1 && <hr />}
+                    {id < articles.length - 1 && (
+                      <hr key={`line-break-${id}`} />
+                    )}
                   </>
                 ))}
               </div>

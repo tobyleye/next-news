@@ -22,6 +22,12 @@ export default function ArticleCard({
           Read more
         </a>
       </p>
+      <style jsx>{`
+        a {
+          text-decoration: underline;
+          color: brown;
+        }
+      `}</style>
     </article>
   );
 }
