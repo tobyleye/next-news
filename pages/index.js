@@ -18,6 +18,7 @@ export default function Home() {
   const [categories, setCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState("");
   const [view, setView] = useState(views.list);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const fetchNews = async () => {
     try {
@@ -75,6 +76,8 @@ export default function Home() {
     localStorage[CATEGORIES_STORAGEKEY] = JSON.stringify(categories);
   }
 
+  const toggleMode = () => setIsDarkMode((mode) => !mode);
+
   return (
     <div className="container">
       <Head>
@@ -82,6 +85,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <button className="mode-toggle" onClick={toggleMode}>
+        {isDarkMode ? "🌞" : "🌚"}
+      </button>
       <section>
         <header>
           <h3>Next News</h3>
@@ -121,17 +127,36 @@ export default function Home() {
           </section>
         )}
       </section>
+      <style>{`
+        body {
+          background-color: ${isDarkMode ? "#222" : "#f9f9f9"};
+          color: ${isDarkMode ? "#f2f2f2" : "#000"};
+          
+        }
+      `}</style>
       <style jsx>{`
         .container {
           max-width: 600px;
           margin: 30px auto 20px;
           padding: 0 18px;
+          position: relative;
+          min-height: 100vh;
         }
         header {
           display: flex;
           align-items: center;
           justify-content: space-between;
           width: 100%;
+        }
+        .mode-toggle {
+          font-size: 2.4rem;
+          border: none;
+          outline: none;
+          cursor: pointer;
+          background: none;
+          position: absolute;
+          bottom: 10%;
+          right: 2%;
         }
       `}</style>
     </div>
