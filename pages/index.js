@@ -4,6 +4,7 @@ import ArticleCard from "../components/ArticleCard";
 import Tab from "../components/Tab";
 import AddNewCategory from "../components/AddNewCategory";
 import Loading from "../components/Loading";
+import GlobalStyles from "../components/Styles";
 
 const CATEGORIES_STORAGEKEY = "categories";
 
@@ -80,6 +81,7 @@ export default function Home() {
 
   return (
     <div className="container">
+      <GlobalStyles isDarkMode={isDarkMode} />
       <Head>
         <title>Next News</title>
         <link rel="icon" href="/favicon.ico" />
@@ -128,10 +130,9 @@ export default function Home() {
         )}
       </section>
       <style>{`
-        body {
-          background-color: ${isDarkMode ? "#222" : "#f9f9f9"};
-          color: ${isDarkMode ? "#f2f2f2" : "#000"};
-          
+         body {
+          color: var(--text-color);
+          background-color: var(--bg-color);
         }
       `}</style>
       <style jsx>{`

@@ -26,7 +26,7 @@ export default function ArticleCard({
       <style jsx>{`
         a {
           text-decoration: underline;
-          color: brown;
+          color: var(--link-color);
         }
       `}</style>
     </article>
