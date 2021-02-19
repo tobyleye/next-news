@@ -140,7 +140,6 @@ export default function Home() {
           margin: 30px auto 20px;
           padding: 0 18px;
           position: relative;
-          min-height: 100vh;
         }
         header {
           display: flex;
@@ -154,9 +153,14 @@ export default function Home() {
           outline: none;
           cursor: pointer;
           background: none;
-          position: absolute;
-          bottom: 10%;
-          right: 2%;
+          position: fixed;
+          bottom: 3%;
+          right: 5%;
+        }
+        @media screen and (min-width: 740px) {
+          .mode-toggle {
+            right: 20%;
+          }
         }
       `}</style>
     </div>
