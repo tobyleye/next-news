@@ -1,14 +1,4 @@
-import {
-  render,
-  screen,
-  act,
-  waitFor,
-  fireEvent,
-  findByRole,
-  wait,
-  findByText,
-  getByText,
-} from "@testing-library/react";
+import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import Index from "../../pages/index";
 
 global.fetch = jest.fn(() =>
