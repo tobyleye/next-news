@@ -4,7 +4,7 @@ export default function Tab({ tabs = [], active, onChange }) {
       {tabs.map((tab, idx) => (
         <button
           key={idx}
-          className={active === tab && "active"}
+          className={active === tab ? "active" : undefined}
           onClick={() => {
             onChange(tab);
           }}

@@ -108,13 +108,12 @@ export default function Home() {
               <Loading />
             ) : (
               <div>
-                {articles.map((article, id) => (
-                  <>
-                    <ArticleCard key={id} {...article} />
-                    {id < articles.length - 1 && (
-                      <hr key={`line-break-${id}`} />
-                    )}
-                  </>
+                {articles.map((article, index) => (
+                  <ArticleCard
+                    key={index}
+                    {...article}
+                    hasHr={index < articles.length - 1}
+                  />
                 ))}
               </div>
             )}
