@@ -26,11 +26,11 @@ export default function ArticleCard({
           </a>
         </p>
         <style jsx>{`
-          a {
-            text-decoration: underline;
-            color: brown;
-          }
-        `}</style>
+        a {
+          text-decoration: underline;
+          color: var(--link-color);
+        }
+      `}</style>
       </article>
       {hasHr && <hr />}
     </>
