@@ -1,7 +1,17 @@
 export default function Loading() {
   return (
     <div>
+      <span className="screen-reader">Loading...</span>
       <style jsx>{`
+        .screen-reader {
+          clip: rect(0 0 0 0);
+          clip-path: inset(50%);
+          height: 1px;
+          overflow: hidden;
+          position: absolute;
+          white-space: nowrap;
+          width: 1px;
+        }
         div {
           text-align: center;
           padding: 2rem 0;

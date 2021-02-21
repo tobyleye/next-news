@@ -6,9 +6,10 @@ export default function AddNewCategory({ categories, onChange }) {
   return (
     <section>
       <form
+        aria-label="form"
         onSubmit={(e) => {
           e.preventDefault();
-          const category = newCategory.toLowerCase();
+          const category = newCategory.toLowerCase().trim();
           if (categories.indexOf(category) < 0) {
             onChange([...categories, category]);
           }
@@ -21,7 +22,7 @@ export default function AddNewCategory({ categories, onChange }) {
           value={newCategory}
           onChange={(e) => setNewCategory(e.target.value)}
         />
-        <button>add</button>
+        <button disabled={newCategory.trim() === ""}>add</button>
       </form>
 
       <ul>
@@ -29,6 +30,7 @@ export default function AddNewCategory({ categories, onChange }) {
           <li key={id}>
             {cat}
             <button
+              data-testid={`bin-${id}`}
               onClick={() =>
                 onChange(categories.filter((catItem) => catItem !== cat))
               }
