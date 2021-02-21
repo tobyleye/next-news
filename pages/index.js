@@ -4,6 +4,7 @@ import ArticleCard from "../components/ArticleCard";
 import Tab from "../components/Tab";
 import AddNewCategory from "../components/AddNewCategory";
 import Loading from "../components/Loading";
+import GlobalStyles from "../components/Styles";
 
 const CATEGORIES_STORAGEKEY = "categories";
 
@@ -18,6 +19,7 @@ export default function Home() {
   const [categories, setCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState("");
   const [view, setView] = useState(views.list);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const fetchNews = async () => {
     try {
@@ -75,13 +77,19 @@ export default function Home() {
     localStorage[CATEGORIES_STORAGEKEY] = JSON.stringify(categories);
   }
 
+  const toggleMode = () => setIsDarkMode((mode) => !mode);
+
   return (
     <div className="container">
+      <GlobalStyles isDarkMode={isDarkMode} />
       <Head>
         <title>Next News</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <button className="mode-toggle" onClick={toggleMode}>
+        {isDarkMode ? "🌞" : "🌚"}
+      </button>
       <section>
         <header>
           <h3>Next News</h3>
@@ -120,17 +128,39 @@ export default function Home() {
           </section>
         )}
       </section>
+      <style>{`
+         body {
+          color: var(--text-color);
+          background-color: var(--bg-color);
+        }
+      `}</style>
       <style jsx>{`
         .container {
           max-width: 600px;
           margin: 30px auto 20px;
           padding: 0 18px;
+          position: relative;
         }
         header {
           display: flex;
           align-items: center;
           justify-content: space-between;
           width: 100%;
+        }
+        .mode-toggle {
+          font-size: 2.4rem;
+          border: none;
+          outline: none;
+          cursor: pointer;
+          background: none;
+          position: fixed;
+          bottom: 3%;
+          right: 5%;
+        }
+        @media screen and (min-width: 740px) {
+          .mode-toggle {
+            right: 20%;
+          }
         }
       `}</style>
     </div>
