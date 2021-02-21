@@ -1,4 +1,10 @@
-import { render, screen, waitFor, fireEvent } from "@testing-library/react";
+import {
+  render,
+  screen,
+  waitFor,
+  fireEvent,
+  getByText,
+} from "@testing-library/react";
 import Index from "../../pages/index";
 
 global.fetch = jest.fn(() =>
@@ -29,7 +35,7 @@ describe("Index", () => {
 
 describe("AddNewCategory Integration", () => {
   beforeEach(async () => {
-    const { getByRole, findByText } = render(<Index />);
+    const { findByText } = render(<Index />);
     const button = await findByText("Add category");
     fireEvent.click(button);
   });
@@ -42,6 +48,6 @@ describe("AddNewCategory Integration", () => {
       target: { value: "new category" },
     });
     fireEvent.click(screen.getByText("add"));
-    screen.getAllByText("new category");
+    getByText(screen.getByRole("navigation"), "new category");
   });
 });
