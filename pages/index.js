@@ -91,7 +91,7 @@ export default function Home() {
       </button>
       <section>
         <header>
-          <h3>Next News</h3>
+          <h3>Next New</h3>
           <button onClick={() => setView(views.add)}>Add category</button>
         </header>
 
