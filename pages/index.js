@@ -83,7 +83,7 @@ export default function Home() {
     <div className="container">
       <GlobalStyles isDarkMode={isDarkMode} />
       <Head>
-        <title>Next New</title>
+        <title>Next News</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <button className="mode-toggle" onClick={toggleMode}>
@@ -91,7 +91,7 @@ export default function Home() {
       </button>
       <section>
         <header>
-          <h3>Next New</h3>
+          <h3>Next News</h3>
           <button onClick={() => setView(views.add)}>Add category</button>
         </header>
 
