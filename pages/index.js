@@ -83,10 +83,9 @@ export default function Home() {
     <div className="container">
       <GlobalStyles isDarkMode={isDarkMode} />
       <Head>
-        <title>Next News</title>
+        <title>Next New</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <button className="mode-toggle" onClick={toggleMode}>
         {isDarkMode ? "🌞" : "🌚"}
       </button>
