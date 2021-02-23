@@ -86,7 +86,6 @@ export default function Home() {
         <title>Next News</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <button className="mode-toggle" onClick={toggleMode}>
         {isDarkMode ? "🌞" : "🌚"}
       </button>
