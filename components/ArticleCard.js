@@ -5,7 +5,7 @@ export default function ArticleCard({
   url,
   urlToImage,
   publishedAt,
-  hasHr,
+  isLast,
 }) {
   return (
     <>
@@ -26,13 +26,13 @@ export default function ArticleCard({
           </a>
         </p>
         <style jsx>{`
-        a {
-          text-decoration: underline;
-          color: var(--link-color);
-        }
-      `}</style>
+          a {
+            text-decoration: underline;
+            color: var(--link-color);
+          }
+        `}</style>
       </article>
-      {hasHr && <hr />}
+      {!isLast && <hr />}
     </>
   );
 }

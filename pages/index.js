@@ -120,7 +120,7 @@ export default function Home() {
                   <ArticleCard
                     key={index}
                     {...article}
-                    hasHr={index < articles.length - 1}
+                    isLast={index === articles.length - 1}
                   />
                 ))}
               </div>

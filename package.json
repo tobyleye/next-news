@@ -9,11 +9,12 @@
     "lambda-serve": "netlify-lambda serve functions",
     "lambda-build": "netlify-lambda build functions",
     "test": "jest",
-    "start-both-servers": "npm run lambda-server && npm run dev"
+    "start-both-servers": "npm run lambda-serve && npm run dev"
   },
   "dependencies": {
     "axios": "^0.21.1",
     "dayjs": "^1.10.4",
+    "dotenv": "^8.2.0",
     "next": "10.0.6",
     "react": "17.0.1",
     "react-dom": "17.0.1"
