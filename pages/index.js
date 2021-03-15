@@ -1,11 +1,10 @@
-export default function Home() {
-  return <div></div>;
-}
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
-export function getStaticProps(context) {
-  return {
-    redirect: {
-      destination: "/c/business",
-    },
-  };
+export default function Home() {
+  const router = useRouter();
+  useEffect(() => {
+    router.push("/c/business");
+  }, []);
+  return null;
 }
