@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useAppData } from "../contexts/AppData";
 
-export default function AddNewCategory({ categories, onChange }) {
+export default function AddCategory() {
+  const { categories, setCategories } = useAppData();
   const [newCategory, setNewCategory] = useState("");
 
   return (
@@ -11,7 +13,7 @@ export default function AddNewCategory({ categories, onChange }) {
           e.preventDefault();
           const category = newCategory.toLowerCase().trim();
           if (categories.indexOf(category) < 0) {
-            onChange([...categories, category]);
+            setCategories([...categories, category]);
           }
           setNewCategory("");
         }}
@@ -32,7 +34,7 @@ export default function AddNewCategory({ categories, onChange }) {
             <button
               data-testid={`bin-${id}`}
               onClick={() =>
-                onChange(categories.filter((catItem) => catItem !== cat))
+                setCategories(categories.filter((catItem) => catItem !== cat))
               }
             >
               &times;

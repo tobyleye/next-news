@@ -1,16 +1,20 @@
+import Link from "next/link";
 export default function Tab({ tabs = [], active, onChange }) {
   return (
     <nav>
       {tabs.map((tab, idx) => (
-        <button
-          key={idx}
-          className={active === tab ? "active" : undefined}
-          onClick={() => {
-            onChange(tab);
-          }}
-        >
-          {tab}
-        </button>
+        // <button
+        //   key={idx}
+        //   className={active === tab ? "active" : undefined}
+        //   onClick={() => {
+        //     onChange(tab);
+        //   }}
+        // >
+        //   {tab}
+        // </button>
+        <Link href={`/${tab}`}>
+          <button>{tab}</button>
+        </Link>
       ))}
       <style jsx>{`
         nav {
