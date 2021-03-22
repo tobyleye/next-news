@@ -4,7 +4,7 @@ import { useEffect } from "react";
 export default function Home() {
   const router = useRouter();
   useEffect(() => {
-    router.push("/c/business");
+    router.push("/news/business");
   }, []);
   return null;
 }

@@ -21,7 +21,7 @@ export default function Header() {
       </div>
       <nav>
         {categories.map((category, idx) => (
-          <Link href={`/c/${category}`} key={idx}>
+          <Link href={`/news/${category}`} key={idx}>
             <button className={className(category)}>{category}</button>
           </Link>
         ))}
